@@ -40,7 +40,7 @@ public class Carro {
 	private Marca marca;
 	
 	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name="proprietarios") //aqui estamos definindo o nome da TABELA DA RELAÇÃO N PRA N
+	@JoinTable(name="carro_tem_proprietarios") //aqui estamos definindo o nome da TABELA DA RELAÇÃO N PRA N
 	@JsonIgnoreProperties("carros")
 	private List<Proprietario> proprietarios;
 	
