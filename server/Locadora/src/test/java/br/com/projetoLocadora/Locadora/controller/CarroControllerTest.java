@@ -28,7 +28,25 @@ public class CarroControllerTest {
     void retornoCadastro(){
         Carro carro = new Carro();
         carro.setNome("ABC");
+        carro.setAno(2000);
         ResponseEntity<String> retorno = this.carroController.save(carro);
         assertEquals(200, retorno.getStatusCode().value());
     }
+
+    @Test
+    void cadastroComNomeInvalido(){
+        Carro carro = new Carro();
+        carro.setNome("");
+        ResponseEntity<String> retorno = this.carroController.save(carro);
+        assertEquals(400, retorno.getStatusCode().value());
+    }
+
+    @Test
+    void cadastroComAnoInvalido(){
+        Carro carro = new Carro();
+        carro.setAno(0);
+        ResponseEntity<String> retorno = this.carroController.save(carro);
+        assertEquals(400, retorno.getStatusCode().value());
+    }
 }
+

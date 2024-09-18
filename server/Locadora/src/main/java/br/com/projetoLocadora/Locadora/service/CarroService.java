@@ -18,11 +18,23 @@ public class CarroService {
 	
 
 	public String save (Carro carro) {
+		this.verificarNomeAnoCarro(carro.getNome(), carro.getAno());
 		this.carroRepository.save(carro);
 		return "Carro cadastrado com sucesso";
 	}
 	
+	// Regra de negócio no Service
+	public void verificarNomeAnoCarro(String nome, int ano){
+		if(nome.equals(""))
+			throw new RuntimeException();
+		if(ano == 0)
+			throw new RuntimeException();
+		if(nome.equals("Gol") && ano > 2022)
+			throw new RuntimeException();
+	}
+
 	public String update (Carro carro, long id) {
+		this.verificarNomeAnoCarro(carro.getNome(), carro.getAno());
 		carro.setId(id);
 		this.carroRepository.save(carro);
 		return "Atualizado com sucesso";
