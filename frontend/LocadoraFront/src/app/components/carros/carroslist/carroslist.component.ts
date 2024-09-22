@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Carro } from '../../../models/carro';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { CarroService } from '../../../services/carro.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-carroslist',
@@ -13,29 +15,58 @@ import { RouterLink } from '@angular/router';
 export class CarroslistComponent {
 
   lista: Carro[] = [];
-
+  carroService = inject(CarroService);
+  erro: any;
   constructor(){
 
-    this.lista.push(new Carro(1, "ABC", "Marca"))
-    this.lista.push(new Carro(2, "ABC", "Marca"))
-    this.lista.push(new Carro(3, "ABC", "Marca"))
-
-    // Se no momento que trocou de rota se foi enviado algum dado, se foi ele irá criar o novo objeto
-    let carroNovo = history.state.carroNovo;
-    let carroEditado = history.state.carroEditado;
-
-    if(carroNovo){
-      carroNovo.id = 1000
-      this.lista.push(carroNovo)
-    }
-
-    if(carroEditado){
-      let indice = this.lista.findIndex(x => {return x.id == carroEditado.id});
-      this.lista[indice] = carroEditado;
-    }
+   this.findAll()
   }
 
-  deleteById(){
-    // implementar
+  findAll(){
+    this.carroService.findAll().subscribe({
+      next: lista =>{ // Retorno positivo
+        this.lista = lista;
+      },
+      error: erro => { // Ocorrer erro
+          alert("Erro");
+      }
+    })
+
+  }
+
+  deleteById(carro: Carro) {
+    Swal.fire({
+      title: 'Tem certeza que deseja deletar esse carro?',
+      icon: 'warning',
+      showConfirmButton: true,
+      showDenyButton: true,
+      confirmButtonText: 'Sim',
+      cancelButtonText: 'Não',
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+
+        this.carroService.delete(carro.id).subscribe({
+          next: mensagem => { //quando o back retornar o que se espera
+            Swal.fire({
+              title: mensagem,
+              icon: 'success',
+              confirmButtonText: 'Ok',
+            });
+
+            this.findAll();
+          },
+          error: erro => { //quando ocorrer qualquer erro (badrequest, exceptions..)
+            Swal.fire({
+              title: 'Ocorreu um erro',
+              icon: 'error',
+              confirmButtonText: 'Ok',
+            });
+          }
+        });
+
+
+      }
+    });
   }
 }
