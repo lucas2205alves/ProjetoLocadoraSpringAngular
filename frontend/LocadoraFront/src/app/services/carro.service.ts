@@ -23,9 +23,12 @@ export class CarroService {
   }
 
   save(carro: Carro): Observable<string>{
+    console.log(carro);
     return this.http.post<string>(this.API+"/save", carro, {responseType: 'text' as 'json'});
   }
+
   update(carro: Carro, id: number): Observable<string>{
+    
     return this.http.put<string>(this.API+"/update/"+id, carro, {responseType: 'text' as 'json'});
   }
   findById(id: number): Observable<Carro>{

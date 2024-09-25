@@ -13,8 +13,13 @@
                 <label mdbLabel class="form-label" for="usuario">Nome</label>
               </mdb-form-control>
               <br />
+              <mdb-form-control>
+                <input mdbInput type="text" id="carro.marca" class="form-control" [(ngModel)]="carro.marca"/>
+                <label mdbLabel class="form-label" for="usuario">Marca</label>
+              </mdb-form-control>
+              <br />
               <button type="button" class="btn btn-primary btn-rounded" mdbRipple (click)="save()">
-                Acessar
+                Salvar
               </button>
             </div>
           </div>

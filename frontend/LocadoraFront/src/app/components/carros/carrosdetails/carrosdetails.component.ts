@@ -15,36 +15,65 @@ import { CarroService } from '../../../services/carro.service';
 })
 export class CarrosdetailsComponent {
 
-  carro: Carro = new Carro(0, "Carro", "Marca")
+  carro: Carro = new Carro(0, "Carro", null)
   router = inject(ActivatedRoute);
   router2 = inject(Router); // Redirecionamento
 
   carroService = inject(CarroService);
+
   constructor(){
     let id = this.router.snapshot.params['id'];
     if(id > 0){
       this.findById(id);
     }
   }
-  
+
   save(){
     if(this.carro.id > 0){
-      Swal.fire({
-        title: 'Sucesso',
-        text: 'Salvo com sucesso',
-        icon: 'success',
-        confirmButtonText: 'Ok'
-      })
-      this.router2.navigate(['admin/carros'], { state: {carroEditado: this.carro}})
+
+      this.carroService.update(this.carro, this.carro.id).subscribe({
+        next: mensagem => {
+          Swal.fire({
+            title: mensagem,
+            icon: 'success',
+            confirmButtonText: 'Ok',
+          });
+          this.router2.navigate(['admin/carros'], { state: { carroEditado: this.carro } });
+
+        },
+        error: erro => {
+          Swal.fire({
+            title: 'Ocorreu um erro',
+            icon: 'error',
+            confirmButtonText: 'Ok',
+          });
+        }
+      });
+
     }else{
-      Swal.fire({
-        title: 'Editado',
-        text: 'Editado com sucesso',
-        icon: 'success',
-        confirmButtonText: 'Ok'
-      })
-    this.router2.navigate(['admin/carros'], { state: {carroNovo: this.carro}})
-  }
+
+      this.carroService.save(this.carro).subscribe({
+        next: mensagem => {
+          Swal.fire({
+            title: mensagem,
+            icon: 'success',
+            confirmButtonText: 'Ok',
+          });
+          this.router2.navigate(['admin/carros'], { state: { carroNovo: this.carro } });
+
+        },
+        error: erro => {
+          Swal.fire({
+            title: 'Ocorreu um erro',
+            icon: 'error',
+            confirmButtonText: 'Ok',
+          });
+        }
+      });
+
+    }
+
+
   }
 
   findById(id: number){
@@ -62,3 +91,4 @@ export class CarrosdetailsComponent {
     })
   }
 } 
+
