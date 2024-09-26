@@ -14,6 +14,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+// Classes de teste sem função no front-end
 @Entity 	
 @Getter		
 @Setter		

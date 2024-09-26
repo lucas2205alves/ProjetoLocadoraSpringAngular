@@ -1,5 +1,6 @@
 package br.com.projetoLocadora.Locadora.entity;
 
+// Classes de teste sem função no front-end
 public class Resultado {
     private int soma;
     private double media;

@@ -12,6 +12,7 @@ import br.com.projetoLocadora.Locadora.entity.Entrada;
 import br.com.projetoLocadora.Locadora.entity.Resultado;
 import br.com.projetoLocadora.Locadora.service.LocadoraService;
 
+// Controller de teste sem função no front-end
 @Controller
 @RequestMapping("/calculos")
 public class LocadoraController {
