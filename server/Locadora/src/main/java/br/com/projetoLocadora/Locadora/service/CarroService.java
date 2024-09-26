@@ -18,7 +18,7 @@ public class CarroService {
 	
 
 	public String save (Carro carro) {
-		this.verificarNomeAnoCarro(carro.getNome(), carro.getAno());
+		//this.verificarNomeAnoCarro(carro.getNome(), carro.getAno());
 		this.carroRepository.save(carro);
 		return "Carro cadastrado com sucesso";
 	}
@@ -34,7 +34,7 @@ public class CarroService {
 	}
 
 	public String update (Carro carro, long id) {
-		this.verificarNomeAnoCarro(carro.getNome(), carro.getAno());
+		//this.verificarNomeAnoCarro(carro.getNome(), carro.getAno());
 		carro.setId(id);
 		this.carroRepository.save(carro);
 		return "Atualizado com sucesso";

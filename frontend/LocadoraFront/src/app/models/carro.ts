@@ -8,6 +8,6 @@ export class Carro {
     constructor(id: number, nome: string, marca: Marca){
         this.id = id;
         this.nome = nome;
-        this.marca = marca;
+        if (marca) this.marca = marca;
     }
 }
